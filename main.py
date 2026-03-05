@@ -15,14 +15,12 @@ response = requests.get(url=zillow_url, headers=header)
 
 soup = BeautifulSoup(response.text, 'html.parser')
 property_listing = soup.select(".StyledPropertyCardDataWrapper a")
+
 property_address = [property.getText().replace(" | ", " ").strip() for property in property_listing]
-print(property_address)
 property_link = [property["href"] for property in property_listing]
-print(property_link)
 
 property_prices = soup.select(".PropertyCardWrapper span")
 property_price = [price.getText().replace("/mo", "").split("+")[0] for price in property_prices if "$" in price.text]
-print(property_price)
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_experimental_option("detach", True)
